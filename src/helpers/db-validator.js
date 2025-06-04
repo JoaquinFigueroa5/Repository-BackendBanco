@@ -1,6 +1,5 @@
 import User from '../users/user.model.js'
 import Role from '../role/role.model.js';
-import Client from '../clients/client.model.js'
 
 export const validRole = async(role = '') => {
     if (role === "") return;  
@@ -25,12 +24,7 @@ export const existUserById = async(id = ``)=>{
     }
 }
 
-export const existClientById = async (id = '') => {
-    const existClient = await Client.findById(id);
-    if(!existClient){
-        throw new Error(`ID ${id} does not exist in the database`)
-    }
-}
+
 
 export const existUsername = async(username = '') => {
     const existUsername = await User.findOne({username});

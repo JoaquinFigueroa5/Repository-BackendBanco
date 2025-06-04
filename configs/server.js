@@ -4,6 +4,10 @@ import helmet from "helmet";
 import morgan from "morgan";
 import { dbConnection } from "./mongo.js";
 import limiter from "../src/middlewares/validate-cant-request.js";
+import authRoutes from '../src/user-auth/auth.routes.js'
+import userRoutes from '../src/users/user.routes.js'
+import { createAdmin } from "../src/middlewares/creation-default-admin.js";
+
 
 const middlewares = (app) => {
     app.use(express.urlencoded({ extended: false }));
@@ -15,7 +19,7 @@ const middlewares = (app) => {
 }
 
 const routes = (app) => {
-
+    app.use('/BancaOnline/v1/auth', authRoutes)
 }
 
 const conectarDB = async () => {
@@ -35,6 +39,7 @@ export const initServer = async () => {
         conectarDB();
         routes(app);
         app.listen(port);
+        createAdmin()
         console.log(`server running on port ${port}`)
     } catch (error) {
         console.log(`server init failed: ${error}`);
