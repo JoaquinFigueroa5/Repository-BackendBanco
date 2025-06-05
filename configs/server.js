@@ -7,6 +7,7 @@ import limiter from "../src/middlewares/validate-cant-request.js";
 import authRoutes from '../src/user-auth/auth.routes.js'
 import userRoutes from '../src/users/user.routes.js'
 import { createAdmin } from "../src/middlewares/creation-default-admin.js";
+import accountRoutes from "../src/accounts/account.routes.js"
 
 
 const middlewares = (app) => {
@@ -20,6 +21,7 @@ const middlewares = (app) => {
 
 const routes = (app) => {
     app.use('/BancaOnline/v1/auth', authRoutes)
+    app.use('/BancaOnline/v1/accounts', accountRoutes)
 }
 
 const conectarDB = async () => {
