@@ -21,6 +21,7 @@ const middlewares = (app) => {
 
 const routes = (app) => {
     app.use('/BancaOnline/v1/auth', authRoutes)
+    app.use('/BancaOnline/v1/user', userRoutes)
     app.use('/BancaOnline/v1/accounts', accountRoutes)
 }
 

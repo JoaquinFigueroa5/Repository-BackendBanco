@@ -4,35 +4,48 @@ const UserSchema = Schema(
     {
         name: {
             type: String,
-            required: [true, "Name is required"],
+            required: function () {
+                return this.role !== 'ADMIN_ROLE';
+            },
             maxLength: [25, "Can't exceed 25 characters"]
         },
         surname: {
             type: String,
-            required: [true, "Surname is required"],
+            required: function () {
+                return this.role !== 'ADMIN_ROLE';
+            },
             maxLength: [25, "Can't exceed 25 characters"]
         },
         username: {
             type: String,
-            unique: true
-        },
-        dpi:{
-            type: String,
-            required: true,
             unique: true,
-            maxLength: [13, "Can't exceed 13 characters"],
+            required: [true, "Username is required"]
         },
-        address:{
-            type:  String,
-            required: true
+        dpi: {
+            type: String,
+            required: function () {
+                return this.role !== 'ADMIN_ROLE';
+            },
+            unique: true,
+            maxLength: [13, "Can't exceed 13 characters"]
         },
-        work:{
-            type:  String,
-            required: true
+        address: {
+            type: String,
+            required: function () {
+                return this.role !== 'ADMIN_ROLE';
+            }
         },
-        income:{
+        work: {
+            type: String,
+            required: function () {
+                return this.role !== 'ADMIN_ROLE';
+            }
+        },
+        income: {
             type: Schema.Types.Decimal128,
-            required: true
+            required: function () {
+                return this.role !== 'ADMIN_ROLE';
+            }
         },
         email: {
             type: String,
@@ -46,9 +59,11 @@ const UserSchema = Schema(
         },
         phone: {
             type: String,
+            required: function () {
+                return this.role !== 'ADMIN_ROLE';
+            },
             minLength: 8,
-            maxLength: 8,
-            required: true,
+            maxLength: 8
         },
         role: {
             type: String,
@@ -57,13 +72,14 @@ const UserSchema = Schema(
         },
         status: {
             type: Boolean,
-            default: true,
+            default: true
         }
     },
     {
         timestamps: true,
         versionKey: false
     }
-)
+);
 
-export default model ("User", UserSchema)
+
+export default model("User", UserSchema)

@@ -4,26 +4,19 @@ import User from '../users/user.model.js'
 export const createAdmin = async () => {
     try {
         const existAdmin = await User.findOne({ role: "ADMIN_ROLE" });
-        
+
         if (!existAdmin) {
             const hashed = await argon2.hash("ADMINB");
             const adminUser = new User({
-                name: "ADMINB",
-                surname: "ADMINB",
                 username: "ADMINB",
-                dpi: "134657891234",
-                address: "calla 2",
-                work: "kakas",
-                income: 100.00,
                 email: "ADMINB@gmail.com",
-                phone: "12345678",
                 password: hashed,
                 role: "ADMIN_ROLE"
             });
 
             await adminUser.save();
-        } 
+        }
     } catch (error) {
-        console.error("Error creating admin:", error);
+        console.error("Error creating admin");
     }
 };
