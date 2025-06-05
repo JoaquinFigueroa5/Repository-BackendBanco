@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { getAccounts, getAccountsById, createAccounts } from "./account.controller.js"
+import { getAccounts, getAccountsById, createAccounts, updateAccount } from "./account.controller.js"
 
 const router = Router()
 
@@ -16,6 +16,11 @@ router.get(
 router.post(
     "/",
     createAccounts
+)
+
+router.put(
+    "/:id",
+    updateAccount
 )
 
 export default router;
