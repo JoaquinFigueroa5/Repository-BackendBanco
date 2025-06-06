@@ -6,6 +6,7 @@ import { dbConnection } from "./mongo.js";
 import limiter from "../src/middlewares/validate-cant-request.js";
 import authRoutes from '../src/user-auth/auth.routes.js'
 import userRoutes from '../src/users/user.routes.js'
+import productRoutes from '../src/products/product.routes.js'
 import { createAdmin } from "../src/middlewares/creation-default-admin.js";
 import accountRoutes from "../src/accounts/account.routes.js"
 
@@ -23,6 +24,7 @@ const routes = (app) => {
     app.use('/BancaOnline/v1/auth', authRoutes)
     app.use('/BancaOnline/v1/user', userRoutes)
     app.use('/BancaOnline/v1/accounts', accountRoutes)
+    app.use('/BancaOnline/v1/product', productRoutes)
 }
 
 const conectarDB = async () => {
