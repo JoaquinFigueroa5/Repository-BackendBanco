@@ -43,34 +43,27 @@ export const getProduct = async (req, res) => {
     }
 };
 
-export const updateProduct = async (req, res) => {
+export const updateProduct = async (req, res = response) => {
     try {
         const { id } = req.params;
         const { _id, ...data } = req.body;
 
         const product = await Product.findByIdAndUpdate(id, data, { new: true });
 
-        if (!product) {
-            return res.status(404).json({
-                success: false,
-                msg: 'Product not found'
-            });
-        }
-
         res.status(200).json({
-            success: true,
-            msg: 'Product updated successfully',
+            succes: true,
+            msg: 'Producto actualizada exitosamente',
             product
-        });
+        })
 
     } catch (error) {
         res.status(500).json({
-            success: false,
-            msg: 'Error updating product',
-            error: error.message || error
-        });
+            succes: false,
+            msg: "Error al actualizar el producto",
+            error: error.message
+        })
     }
-};
+} 
 
 export const deleteProduct = async (req, res) => {
     try {
