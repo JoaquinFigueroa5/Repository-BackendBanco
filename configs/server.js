@@ -8,7 +8,7 @@ import authRoutes from '../src/user-auth/auth.routes.js'
 import userRoutes from '../src/users/user.routes.js'
 import { createAdmin } from "../src/middlewares/creation-default-admin.js";
 import accountRoutes from "../src/accounts/account.routes.js"
-
+import transactionRoutes from "../src/transaction/transaction.routes.js";
 
 const middlewares = (app) => {
     app.use(express.urlencoded({ extended: false }));
@@ -23,6 +23,7 @@ const routes = (app) => {
     app.use('/BancaOnline/v1/auth', authRoutes)
     app.use('/BancaOnline/v1/user', userRoutes)
     app.use('/BancaOnline/v1/accounts', accountRoutes)
+    app.use('/BancaOnline/v1/transactions', transactionRoutes)
 }
 
 const conectarDB = async () => {
