@@ -10,6 +10,7 @@ import productRoutes from '../src/products/product.routes.js'
 import depositRoutes from '../src/deposits/deposit.routes.js'
 import { createAdmin } from "../src/middlewares/creation-default-admin.js";
 import accountRoutes from "../src/accounts/account.routes.js"
+import dailyLimitRoutes from '../src/dailyLimit/dailyLimit.routes.js'
 import transactionRoutes from "../src/transaction/transaction.routes.js";
 
 const middlewares = (app) => {
@@ -28,6 +29,7 @@ const routes = (app) => {
     app.use('/BancaOnline/v1/transactions', transactionRoutes)
     app.use('/BancaOnline/v1/product', productRoutes)
     app.use('/BancaOnline/v1/deposit', depositRoutes)
+    app.use('/BancaOnline/v1/dailyLimit', dailyLimitRoutes)
 }
 
 const conectarDB = async () => {
