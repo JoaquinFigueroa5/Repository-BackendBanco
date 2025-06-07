@@ -10,7 +10,7 @@ import productRoutes from '../src/products/product.routes.js'
 import depositRoutes from '../src/deposits/deposit.routes.js'
 import { createAdmin } from "../src/middlewares/creation-default-admin.js";
 import accountRoutes from "../src/accounts/account.routes.js"
-
+import transactionRoutes from "../src/transaction/transaction.routes.js";
 
 const middlewares = (app) => {
     app.use(express.urlencoded({ extended: false }));
@@ -25,6 +25,7 @@ const routes = (app) => {
     app.use('/BancaOnline/v1/auth', authRoutes)
     app.use('/BancaOnline/v1/user', userRoutes)
     app.use('/BancaOnline/v1/accounts', accountRoutes)
+    app.use('/BancaOnline/v1/transactions', transactionRoutes)
     app.use('/BancaOnline/v1/product', productRoutes)
     app.use('/BancaOnline/v1/deposit', depositRoutes)
 }

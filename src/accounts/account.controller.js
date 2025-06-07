@@ -62,6 +62,21 @@ export const createAccounts = async (req, res) => {
             });
         }
 
+        if (user.role !== 'USER_ROLE') {
+            return res.status(403).json({
+                success: false,
+                msg: "Solo los usuarios pueden tener una cuenta",
+            });
+        }
+
+        const existingAccount = await Account.findOne({ userId: data.userId });
+        if (existingAccount) {
+            return res.status(400).json({
+                success: false,
+                msg: "Este usuario ya tiene una cuenta",
+            });
+        }
+
         const accountNumber = await generateUniqueAccountNumber();
 
         const account = new Account({
@@ -70,15 +85,6 @@ export const createAccounts = async (req, res) => {
             accountNumber,
         });
 
-        const existingAccount = await Account.findOne({ userId: data.userId });
-
-        if (existingAccount) {
-        return res.status(400).json({
-            success: false,
-            msg: "Este usuario ya tiene una cuenta",
-        });
-        }
-
         await account.save();
 
         res.status(201).json({
@@ -86,15 +92,14 @@ export const createAccounts = async (req, res) => {
             msg: "Se creó la cuenta con éxito",
             account,
         });
-        
+
     } catch (error) {
-            res.status(500).json({
+        res.status(500).json({
             success: false,
             msg: "Se produjo un error al crear la cuenta",
         });
     }
 };
-
 export const updateAccount = async (req, res) => {
     try {
         const { id } = req.params;

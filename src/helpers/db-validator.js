@@ -1,5 +1,6 @@
 import User from '../users/user.model.js'
 import Role from '../role/role.model.js';
+import Account from '../accounts/account.model.js'
 
 export const validRole = async(role = '') => {
     if (role === "") return;  
@@ -24,7 +25,19 @@ export const existUserById = async(id = ``)=>{
     }
 }
 
+export const existAccountById = async(accountId = ``)=>{
+    const account = await Account.findById(accountId);
+        if (!account) {
+            throw new Error(`Account ${accountId} does not exist`);
+        }
+}
 
+export const destinationAccountById = async(destinationAccountId = ``)=>{
+    const destinationAccount = await Account.findById(destinationAccountId);
+        if (!destinationAccount) {
+            throw new Error(`Destination account ${destinationAccountId} does not exist`);
+        }
+}
 
 export const existUsername = async(username = '') => {
     const existUsername = await User.findOne({username});
