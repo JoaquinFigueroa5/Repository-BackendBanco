@@ -1,5 +1,7 @@
 import Transaction from './transaction.model.js';
 import Account from '../accounts/account.model.js';
+import Deposit from '../deposits/deposit.model.js';
+
 
 export const createTransaction = async (req, res) => {
   try {
@@ -15,12 +17,101 @@ export const createTransaction = async (req, res) => {
     if (type === 'Transferencia' && Number(amount) > 2000) {
       return res.status(400).json({
         success: false,
-        message: 'Amount cannot exceed 2000 for Transferencias'
+        message: 'Amount cannot exceed Q2000 for Transferencias'
       });
     }
 
+    // Validación: si no es depósito, debe existir el accountId
+    if (type !== 'Deposito' && !accountId) {
+      return res.status(400).json({
+        success: false,
+        message: 'Origin account is required for this transaction type'
+      });
+    }
+
+    const destinationAccount = await Account.findById(destinationAccountId);
+    if (!destinationAccount) {
+      return res.status(404).json({
+        success: false,
+        message: 'Destination account not found'
+      });
+    }
+
+    let accountOwner = null;
+    if (type !== 'Deposito') {
+      accountOwner = await Account.findById(accountId);
+      if (!accountOwner) {
+        return res.status(404).json({
+          success: false,
+          message: 'Origin account not found'
+        });
+      }
+    }
+
+    // Validación: límite diario de Q10,000 en transferencias
+    if (type === 'Transferencia') {
+      const startOfDay = new Date();
+      startOfDay.setHours(0, 0, 0, 0);
+      const endOfDay = new Date();
+      endOfDay.setHours(23, 59, 59, 999);
+
+      const totalTransfers = await Transaction.aggregate([
+        {
+          $match: {
+            accountId: accountOwner._id,
+            type: 'Transferencia',
+            createdAt: { $gte: startOfDay, $lte: endOfDay }
+          }
+        },
+        {
+          $group: {
+            _id: null,
+            total: { $sum: { $toDouble: "$amount" } }
+          }
+        }
+      ]);
+
+      const previousTotal = totalTransfers[0]?.total || 0;
+      const transferAmount = parseFloat(amount);
+
+      if (previousTotal + transferAmount > 10000) {
+        return res.status(400).json({
+          success: false,
+          message: `Daily transfer limit exceeded. You have already transferred Q${previousTotal.toFixed(2)} today`
+        });
+      }
+
+      const ownerBalance = parseFloat(accountOwner.balance.toString());
+      if (ownerBalance < transferAmount) {
+        return res.status(400).json({
+          success: false,
+          message: 'Insufficient funds for transfer'
+        });
+      }
+
+      accountOwner.balance = (ownerBalance - transferAmount).toFixed(2);
+      await accountOwner.save();
+
+      destinationAccount.balance = (
+        parseFloat(destinationAccount.balance.toString()) + transferAmount
+      ).toFixed(2);
+      await destinationAccount.save();
+    }
+
+    if (type === 'Deposito') {
+      await Deposit.create({
+        numberAccount: destinationAccountId,
+        amount
+      });
+
+      destinationAccount.balance = (
+        parseFloat(destinationAccount.balance.toString()) + parseFloat(amount)
+      ).toFixed(2);
+      await destinationAccount.save();
+    }
+
     const newTransaction = new Transaction({
-      accountId,
+      accountId: type === 'Deposito' ? null : accountId,
       type,
       amount,
       details,
@@ -44,6 +135,9 @@ export const createTransaction = async (req, res) => {
   }
 };
 
+
+
+
 export const getTransactions = async (req, res) => {
   try {
     const { accountId, limit = 10, skip = 0 } = req.query;
@@ -60,33 +154,33 @@ export const getTransactions = async (req, res) => {
         .skip(Number(skip))
         .limit(Number(limit))
         .populate([
-            {
-              path: 'accountId',
-              populate: { path: 'userId', select: 'name surname' }
-            },
-            {
-              path: 'destinationAccountId',
-              populate: { path: 'userId', select: 'name surname' }
-            }
+          {
+            path: 'accountId',
+            populate: { path: 'userId', select: 'name surname' }
+          },
+          {
+            path: 'destinationAccountId',
+            populate: { path: 'userId', select: 'name surname' }
+          }
         ])
     ]);
 
     const transactionsFormatted = transactions.map(tx => ({
-        ...tx.toObject(),
-        amount: tx.amount.toString()
+      ...tx.toObject(),
+      amount: tx.amount.toString()
     }));
 
     res.status(200).json({
-        success: true,
-        total,
-        transactions: transactionsFormatted
+      success: true,
+      total,
+      transactions: transactionsFormatted
     });
 
   } catch (error) {
     res.status(500).json({
-        success: false,
-        msg: 'Error fetching transactions',
-        error: error.message
+      success: false,
+      msg: 'Error fetching transactions',
+      error: error.message
     });
   }
 };
@@ -99,25 +193,25 @@ export const getTransactionById = async (req, res) => {
     const transaction = await Transaction.findOne({ _id: id, status: true });
 
     if (!transaction) {
-        return res.status(404).json({
-            success: false,
-            message: 'Transaction not found'
-        });
+      return res.status(404).json({
+        success: false,
+        message: 'Transaction not found'
+      });
     }
 
     res.status(200).json({
-        success: true,
-        transaction: {
-            ...transaction.toObject(),
-            amount: transaction.amount.toString()
-        }
+      success: true,
+      transaction: {
+        ...transaction.toObject(),
+        amount: transaction.amount.toString()
+      }
     });
 
   } catch (error) {
     res.status(500).json({
-        success: false,
-        message: 'Error fetching transaction',
-        error: error.message
+      success: false,
+      message: 'Error fetching transaction',
+      error: error.message
     });
   }
 };
@@ -134,7 +228,7 @@ export const updateTransaction = async (req, res) => {
         message: 'Transaction not found or inactive'
       });
     }
-    
+
     if (isNaN(amount) || Number(amount) <= 0) {
       return res.status(400).json({
         success: false,

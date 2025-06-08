@@ -2,7 +2,8 @@ import { Schema, model } from 'mongoose';
 
 const DepositSchema = new Schema({
     numberAccount: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Account',
         required: [true, "the account number is required"],
     },
     amount: {

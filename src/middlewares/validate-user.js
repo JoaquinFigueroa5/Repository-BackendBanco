@@ -44,8 +44,8 @@ export const validateRole = async(req, res, next) => {
 }
 
 export const validateAdmin = async (req, res, next) => {
-    const authenticatedUser = req.usuario;
-    if (authenticatedUser.role !== "ADMIN_ROLE") {
+    const authenticatedUser = req.usuario.role;
+    if (authenticatedUser !== "ADMIN_ROLE") {
         return res.status(400).json({
             success: false,
             msg: "You are not authorized to perform this action"

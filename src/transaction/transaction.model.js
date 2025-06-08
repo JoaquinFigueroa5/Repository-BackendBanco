@@ -14,10 +14,6 @@ const transactionSchema = Schema({
         type: Schema.Types.Decimal128,
         required: [true, "the amount is required"]
     },
-    date: {
-        type: Date,
-        default: Date.now
-    },
     details: {
         type: String,
         default: 'Sin detalles',

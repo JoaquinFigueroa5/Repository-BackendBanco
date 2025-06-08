@@ -6,12 +6,11 @@ const AccountSchema = Schema ({
         required: [true, "user is required"],
     },
     accountNumber: {
-        type: String,
-        required: [true, "the account number is required"],
+        type: String
     },
     balance: {
         type: Schema.Types.Decimal128,
-        required: [true, "balance is required"]
+        default: 0.00
     },
     status: {
         type: Boolean,

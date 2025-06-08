@@ -2,6 +2,8 @@ import { Router } from "express";
 import { check } from "express-validator";
 import { getAccounts, getAccountsById, createAccounts, updateAccount } from "./account.controller.js";
 import { validateFields } from "../middlewares/validate-fields.js"; // asegúrate de tener este middleware
+import { validateJWT } from "../middlewares/validate-jwt.js";
+import { validateAdmin } from "../middlewares/validate-user.js";
 
 const router = Router();
 
@@ -14,8 +16,8 @@ router.post(
   [
     check("userId", "El ID del usuario es obligatorio").not().isEmpty(),
     check("userId", "El ID del usuario debe ser un ID válido").isMongoId(),
-    check("balance", "El balance es obligatorio").not().isEmpty(),
-    check("balance", "El balance debe ser numérico").isNumeric(),
+    validateJWT,
+    validateAdmin,
     validateFields
   ],
   createAccounts
