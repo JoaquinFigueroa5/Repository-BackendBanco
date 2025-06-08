@@ -65,3 +65,21 @@ export const validateIncome = (req, res, next) => {
     
     next()
 }
+
+export const validateSensitiveFields = (req, res, next) => {
+    const { id } = req.params; // ID del usuario que se intenta modificar
+    const authenticatedUser = req.usuario.id; // ID del usuario logueado
+    const { password, dpi } = req.body;
+
+    // Si se intenta cambiar password o dpi
+    const wantsToChangeSensitive = password || dpi;
+
+    if (wantsToChangeSensitive && id !== authenticatedUser) {
+        return res.status(403).json({
+            success: false,
+            msg: "Solo el propietario de la cuenta puede modificar su contraseña o DPI"
+        });
+    }
+
+    next();
+};

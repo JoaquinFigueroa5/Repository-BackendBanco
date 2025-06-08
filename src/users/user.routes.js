@@ -4,7 +4,7 @@ import { deleteUser, getUserProfile, getUsers, updateUser } from "./user.control
 import { existUserById, existUsername } from "../helpers/db-validator.js";
 import { validateFields } from "../middlewares/validate-fields.js";
 import { validateJWT } from "../middlewares/validate-jwt.js";
-import { validateOwner, validateEmail, validateRole } from "../middlewares/validate-user.js";
+import { validateOwner, validateEmail, validateRole, validateSensitiveFields } from "../middlewares/validate-user.js";
 import { registerValidator } from "../middlewares/validator.js";
 
 const router = Router()
@@ -17,7 +17,8 @@ router.put(
         validateJWT,
         check("id", "Not a valid ID").isMongoId(),
         check("id").custom(existUserById),
-        validateFields
+        validateFields,
+        validateSensitiveFields
     ],
     updateUser
 
