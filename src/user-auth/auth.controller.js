@@ -44,7 +44,7 @@ export const login = async (req, res) => {
         res.status(500).json({
             success: false,
             msg: "Contact the administrator",
-            error: e.message
+            error: error.message
         })
     }
 }
