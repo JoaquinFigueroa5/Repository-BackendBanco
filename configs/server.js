@@ -11,6 +11,7 @@ import depositRoutes from '../src/deposits/deposit.routes.js'
 import { createAdmin } from "../src/middlewares/creation-default-admin.js";
 import accountRoutes from "../src/accounts/account.routes.js"
 import transactionRoutes from "../src/transaction/transaction.routes.js";
+import { createRoles } from "../src/role/role.controller.js";
 
 const middlewares = (app) => {
     app.use(express.urlencoded({ extended: false }));
@@ -47,7 +48,8 @@ export const initServer = async () => {
         conectarDB();
         routes(app);
         app.listen(port);
-        createAdmin()
+        createAdmin();
+        createRoles();
         console.log(`server running on port ${port}`)
     } catch (error) {
         console.log(`server init failed: ${error}`);
