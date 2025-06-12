@@ -133,9 +133,41 @@ export const createTransaction = async (req, res) => {
       error: error.message
     });
   }
+};  
+
+
+export const getTransactionsByUser = async (req, res) => {
+  try {
+    const userId = req.usuario._id;
+
+    // 1. Buscar las cuentas del usuario autenticado
+    const userAccounts = await Account.find({ userId, status: true });
+
+    // 2. Obtener los IDs de esas cuentas
+    const accountIds = userAccounts.map(account => account._id);
+
+    // 3. Buscar las transacciones relacionadas con esas cuentas (origen)
+    const transactions = await Transaction.find({
+      accountId: { $in: accountIds },
+      status: true
+    })
+    .sort({ createdAt: -1 })
+    .populate('accountId destinationAccountId'); // opcional: para ver detalles de las cuentas
+
+    res.status(200).json({
+      success: true,
+      transactions
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: 'Error getting user transactions',
+      error: error.message
+    });
+  }
 };
-
-
 
 
 export const getTransactions = async (req, res) => {
@@ -165,10 +197,17 @@ export const getTransactions = async (req, res) => {
         ])
     ]);
 
-    const transactionsFormatted = transactions.map(tx => ({
-      ...tx.toObject(),
-      amount: tx.amount.toString()
-    }));
+    const transactionsFormatted = transactions.map(tx => {
+      const originUser = tx.accountId?.userId;
+      const destUser = tx.destinationAccountId?.userId;
+
+      return {
+        ...tx.toObject(),
+        amount: tx.amount.toString(),
+        createdBy: originUser ? `${originUser.name} ${originUser.surname}` : 'Desconocido',
+        receivedBy: destUser ? `${destUser.name} ${destUser.surname}` : 'Desconocido'
+      };
+    });
 
     res.status(200).json({
       success: true,

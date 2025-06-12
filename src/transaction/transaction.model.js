@@ -12,7 +12,7 @@ const transactionSchema = Schema({
     },
     amount: {
         type: Schema.Types.Decimal128,
-        required: [true, "the amount is required"]
+        required: [true, "the amount is required"]  
     },
     details: {
         type: String,

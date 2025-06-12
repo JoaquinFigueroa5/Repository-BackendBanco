@@ -3,6 +3,7 @@ import { Schema, model } from "mongoose";
 const AccountSchema = Schema ({
     userId: {
         type: Schema.Types.ObjectId,
+        ref: "User",
         required: [true, "user is required"],
     },
     accountNumber: {
