@@ -1,11 +1,18 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { getAccounts, getAccountsById, createAccounts, updateAccount } from "./account.controller.js";
+import { getAccounts, getAccountsById, createAccounts, updateAccount, getUserAccount } from "./account.controller.js";
 import { validateFields } from "../middlewares/validate-fields.js"; // asegúrate de tener este middleware
 import { validateJWT } from "../middlewares/validate-jwt.js";
 import { validateAdmin } from "../middlewares/validate-user.js";
 
 const router = Router();
+router.get(
+  "/my-account",
+  [
+    validateJWT
+  ],
+  getUserAccount
+)
 
 router.get("/", getAccounts);
 
@@ -32,5 +39,6 @@ router.put(
   ],
   updateAccount
 );
+
 
 export default router;
