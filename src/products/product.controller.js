@@ -43,6 +43,24 @@ export const getProduct = async (req, res) => {
     }
 };
 
+export const getAllProducts = async (req, res) => {
+    try {
+        const products = await Product.find();
+
+        res.status(200).json({
+            success: true,
+            total: products.length,
+            products
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            msg: "Error getting products",
+            error: error.message || error
+        });
+    }
+};
+
 export const updateProduct = async (req, res = response) => {
     try {
         const { id } = req.params;
@@ -64,6 +82,32 @@ export const updateProduct = async (req, res = response) => {
         })
     }
 } 
+
+export const reactivateProduct = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const product = await Product.findByIdAndUpdate(id, { status: true }, { new: true });
+        
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                msg: "Product not found"
+            });
+        }
+        
+        res.status(200).json({
+            success: true,
+            msg: 'Product reactivated',
+            product
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            msg: "Error reactivating product",
+            error: error.message || error
+        });
+    }
+};
 
 export const deleteProduct = async (req, res) => {
     try {
