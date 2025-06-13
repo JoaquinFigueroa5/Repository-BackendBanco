@@ -5,7 +5,7 @@ import Deposit from '../deposits/deposit.model.js';
 
 export const createTransaction = async (req, res) => {
   try {
-    const { accountId, type, amount, details, destinationAccountId } = req.body;
+    const { accountId, type, amount, details, destinationNumberAccount } = req.body;
 
     if (isNaN(amount) || Number(amount) <= 0) {
       return res.status(400).json({
@@ -21,7 +21,6 @@ export const createTransaction = async (req, res) => {
       });
     }
 
-    // Validación: si no es depósito, debe existir el accountId
     if (type !== 'Deposito' && !accountId) {
       return res.status(400).json({
         success: false,
@@ -29,7 +28,7 @@ export const createTransaction = async (req, res) => {
       });
     }
 
-    const destinationAccount = await Account.findById(destinationAccountId);
+    const destinationAccount = await Account.findOne({ accountNumber: destinationNumberAccount });
     if (!destinationAccount) {
       return res.status(404).json({
         success: false,
@@ -48,7 +47,6 @@ export const createTransaction = async (req, res) => {
       }
     }
 
-    // Validación: límite diario de Q10,000 en transferencias
     if (type === 'Transferencia') {
       const startOfDay = new Date();
       startOfDay.setHours(0, 0, 0, 0);
@@ -100,7 +98,7 @@ export const createTransaction = async (req, res) => {
 
     if (type === 'Deposito') {
       await Deposit.create({
-        numberAccount: destinationAccountId,
+        numberAccount: destinationNumberAccount,
         amount
       });
 
@@ -115,7 +113,7 @@ export const createTransaction = async (req, res) => {
       type,
       amount,
       details,
-      destinationAccountId
+      destinationNumberAccount
     });
 
     await newTransaction.save();
@@ -133,31 +131,40 @@ export const createTransaction = async (req, res) => {
       error: error.message
     });
   }
-};  
+};
 
 
 export const getTransactionsByUser = async (req, res) => {
   try {
     const userId = req.usuario._id;
 
-    // 1. Buscar las cuentas del usuario autenticado
     const userAccounts = await Account.find({ userId, status: true });
 
-    // 2. Obtener los IDs de esas cuentas
     const accountIds = userAccounts.map(account => account._id);
 
-    // 3. Buscar las transacciones relacionadas con esas cuentas (origen)
     const transactions = await Transaction.find({
       accountId: { $in: accountIds },
       status: true
     })
-    .sort({ createdAt: -1 })
-    .populate('accountId destinationAccountId'); // opcional: para ver detalles de las cuentas
+      .sort({ createdAt: -1 })
+      .populate('accountId'); 
+
+    const transactionsWithDestAccount = await Promise.all(
+      transactions.map(async (tx) => {
+        const destAccount = await Account.findOne({ accountNumber: tx.destinationNumberAccount });
+        return {
+          ...tx.toObject(),
+          destinationAccount: destAccount || null
+        };
+      })
+    );
+
 
     res.status(200).json({
       success: true,
-      transactions
+      transactions: transactionsWithDestAccount
     });
+
 
   } catch (error) {
     console.error(error);
@@ -191,7 +198,7 @@ export const getTransactions = async (req, res) => {
             populate: { path: 'userId', select: 'name surname' }
           },
           {
-            path: 'destinationAccountId',
+            path: 'destinationNumberAccount',
             populate: { path: 'userId', select: 'name surname' }
           }
         ])
@@ -199,7 +206,7 @@ export const getTransactions = async (req, res) => {
 
     const transactionsFormatted = transactions.map(tx => {
       const originUser = tx.accountId?.userId;
-      const destUser = tx.destinationAccountId?.userId;
+      const destUser = tx.destinationNumberAccount?.userId;
 
       return {
         ...tx.toObject(),
@@ -258,7 +265,7 @@ export const getTransactionById = async (req, res) => {
 export const updateTransaction = async (req, res) => {
   try {
     const { id } = req.params;
-    const { accountId, type, amount, details, destinationAccountId } = req.body;
+    const { accountId, type, amount, details, destinationNumberAccount } = req.body;
 
     const transaction = await Transaction.findOne({ _id: id, status: true });
     if (!transaction) {

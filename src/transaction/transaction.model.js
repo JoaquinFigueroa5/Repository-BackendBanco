@@ -18,9 +18,8 @@ const transactionSchema = Schema({
         type: String,
         default: 'Sin detalles',
     },
-    destinationAccountId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Account',
+    destinationNumberAccount: {
+        type: String,
         required: [true, "the destination account is required"]
     },
     status: {
