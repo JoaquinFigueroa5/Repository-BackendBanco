@@ -18,6 +18,11 @@ const DepositSchema = new Schema({
         type: Boolean,
         default: false
     },
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     status: {
         type: Boolean,
         default: true

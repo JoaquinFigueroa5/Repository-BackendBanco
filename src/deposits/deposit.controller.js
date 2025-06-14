@@ -3,10 +3,10 @@ import Account from '../accounts/account.model.js';
 
 export const createDeposit = async (req, res) => {
     try {
-
         const { numberAccount, amount } = req.body;
+        const user = req.usuario;
 
-        const account = await Account.findOne({ accountNumber: numberAccount });
+        const account = await Account.findOne({ accountNumber: numberAccount, status: true });
 
         if (!account) {
             return res.status(404).json({
@@ -15,12 +15,29 @@ export const createDeposit = async (req, res) => {
             });
         }
 
+        if (user.role === 'USER_ROLE') {
+            const userAccount = await Account.findOne({ userId: user._id, status: true });
+            if (!userAccount) {
+                return res.status(403).json({
+                    success: false,
+                    msg: 'You do not have an active account'
+                });
+            }
+            if (userAccount.accountNumber !== numberAccount) {
+                return res.status(403).json({
+                    success: false,
+                    msg: 'You can only deposit to your own account'
+                });
+            }
+        }
+
         account.balance = (parseFloat(account.balance) + parseFloat(amount)).toFixed(2);
         await account.save();
 
         const deposit = new Deposit({
-            numberAccount,
+            numberAccount: account._id,
             amount,
+            createdBy: user._id,
         })
 
         await deposit.save();
@@ -29,12 +46,12 @@ export const createDeposit = async (req, res) => {
             success: true,
             msg: 'Deposit created successfully',
             deposit
-        });
-        
+        })
+
     } catch (error) {
         return res.status(500).json({
             success: false,
-            msg:'An error occurred while creating the deposit',
+            msg: 'An error occurred while creating the deposit',
             error: error.message
         })
     }
@@ -61,7 +78,7 @@ export const revertDeposit = async (req, res) => {
         }
         
         const now = new Date();
-        const diffSeconds = (now - deposit.depositDate) / 1000;
+        const diffSeconds = (now - deposit.createdAt) / 1000;
 
         if (diffSeconds > 60) {
             return res.status(400).json({
@@ -70,7 +87,7 @@ export const revertDeposit = async (req, res) => {
             })
         }
 
-        const account = await Account.findOne({ accountNumber: deposit.numberAccount });
+        const account = await Account.findById(deposit.numberAccount);
         if (!account) {
             return res.status(404).json({
                 success: false,
@@ -93,6 +110,74 @@ export const revertDeposit = async (req, res) => {
         return res.status(500).json({
             success: false,
             msg: 'An error occurred while reverting the deposit',
+            error: error.message
+        })
+    }
+}
+
+export const getMyDeposits = async (req, res) => {
+    try {
+
+        const user = req.usuario
+
+        if (user.role === 'ADMIN_ROLE') {
+            const deposits = await Deposit.find({ createdBy: user._id })
+                .populate({
+                    path: 'numberAccount',
+                    select: 'accountNumber balance',
+                    populate: {
+                        path: 'userId',
+                        select: 'name surname'
+                    }
+                })
+
+            return res.status(200).json({
+                success: true,
+                deposits: deposits.map(dep => ({
+                    _id: dep._id,
+                    amount: dep.amount.toString(),
+                    accountNumber: dep.numberAccount?.accountNumber || null,
+                    accountHolder: dep.numberAccount?.userId ? `${dep.numberAccount.userId.name} ${dep.numberAccount.userId.surname}` : null,
+                    createdAt: dep.createdAt,
+                    reversed: dep.reversed
+                }))
+            })
+        }
+
+        const deposits = await Deposit.find({ createdBy: user._id })
+            .populate({
+                path: 'numberAccount',
+                select: 'accountNumber balance',
+                populate: {
+                    path: 'userId',
+                    select: 'name surname'
+                }
+            })
+
+        if (!deposits.length) {
+            return res.status(404).json({
+                success: false,
+                msg: 'You do not have any deposits'
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            deposits: deposits.map(dep => ({
+                _id: dep._id,
+                amount: dep.amount.toString(),
+                accountNumber: dep.numberAccount?.accountNumber || null,
+                accountHolder: dep.numberAccount?.userId ? `${dep.numberAccount.userId.name} ${dep.numberAccount.userId.surname}` : null,
+                destinationAccount: dep.numberAccount?.accountNumber || null,
+                createdAt: dep.createdAt,
+                reversed: dep.reversed
+            }))
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            msg: 'An error occurred while fetching your deposits',
             error: error.message
         })
     }

@@ -1,11 +1,29 @@
 import { Router } from 'express';
-import { createDeposit, getDepositById, getDeposits, getDepositsByAccount, revertDeposit } from './deposit.controller.js';
+import { createDeposit, getDepositById, getDeposits, getDepositsByAccount, revertDeposit, getMyDeposits } from './deposit.controller.js';
+import { validateJWT } from '../middlewares/validate-jwt.js';
 
 const router = Router();
 
-router.post('/', createDeposit)
+router.post('/',
+    [
+        validateJWT
+    ],
+    createDeposit
+)
 
-router.post('/:id', revertDeposit)
+router.post('/:id', 
+    [
+        validateJWT
+    ],
+    revertDeposit
+)
+
+router.get('/myDeposits',
+    [
+        validateJWT
+    ],
+    getMyDeposits
+)
 
 router.get('/', getDeposits)
 
