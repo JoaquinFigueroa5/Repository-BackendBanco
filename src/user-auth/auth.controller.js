@@ -1,4 +1,6 @@
 import User from '../users/user.model.js';
+import Account from '../accounts/account.model.js';
+import { generateUniqueAccountNumber } from '../helpers/generateAccountNumber.js';
 import { hash, verify } from 'argon2';
 import { generateJWT } from "../helpers/generate-jwt.js"
 
@@ -59,6 +61,7 @@ export const register = async (req, res) => {
         const dpiExists = await User.findOne({ dpi: data.dpi });
         const emailExists = await User.findOne({ email: data.email });
         const usernameExists = await User.findOne({ username: data.username });
+        const userId = await User.findOne({})
 
         if (dpiExists) {
             return res.status(400).json({
@@ -90,10 +93,23 @@ export const register = async (req, res) => {
             password: encryptedPassword,
             role: data.role
         })
+
+        let account = null;
+
+        if (user.role === 'USER_ROLE') {
+            const numberRandom = await generateUniqueAccountNumber();
+
+            account = await Account.create({
+                userId: user._id,
+                accountNumber: numberRandom
+            })
+        }
+
         return res.status(200).json({
             message: "User registered successfully",
             userDetails: {
-                user: user.username
+                user: user.username,
+                account
             }
         })
     } catch (error) {
