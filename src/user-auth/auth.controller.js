@@ -1,9 +1,9 @@
 import User from '../users/user.model.js';
-import { hash , verify } from 'argon2';
+import { hash, verify } from 'argon2';
 import { generateJWT } from "../helpers/generate-jwt.js"
 
 export const login = async (req, res) => {
-    const {email, password, username} = req.body;
+    const { email, password, username } = req.body;
     try {
         const user = await User.findOne({
             $or: [
@@ -22,6 +22,7 @@ export const login = async (req, res) => {
             })
         }
 
+
         const validPassword = await verify(user.password, password)
         if (!validPassword) {
             return res.status(400).json({
@@ -35,7 +36,7 @@ export const login = async (req, res) => {
             msg: 'Successful login',
             userDetails: {
                 username: user.username,
-                token : token,
+                token: token,
                 role: user.role
             }
         })
@@ -51,9 +52,29 @@ export const login = async (req, res) => {
 
 
 
-export const register = async (req, res) =>{
+export const register = async (req, res) => {
     try {
         const data = req.body;
+
+        const dpiExists = await User.findOne({ dpi: data.dpi });
+        const emailExists = await User.findOne({ email: data.email });
+        const usernameExists = await User.findOne({ username: data.username });
+
+        if (dpiExists) {
+            return res.status(400).json({
+                msg: "DPI is already in use"
+            });
+        }
+        if (emailExists) {
+            return res.status(400).json({
+                msg: 'Email already in use'
+            });
+        }
+        if (usernameExists) {
+            return res.status(400).json({
+                msg: 'Username already in use'
+            });
+        }
 
         const encryptedPassword = await hash(data.password);
         const user = await User.create({

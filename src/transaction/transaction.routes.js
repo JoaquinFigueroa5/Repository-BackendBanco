@@ -9,6 +9,8 @@ const router = Router();
 
 router.get("/", getTransactions);
 
+// router.get('/global', getTransactionsAdmin)
+
 router.get(
     "/user/",
     [
@@ -17,7 +19,6 @@ router.get(
     getTransactionsByUser
 )
 router.get("/:id", getTransactionById);
-
 
 
 router.post(

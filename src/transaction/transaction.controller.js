@@ -1,6 +1,7 @@
 import Transaction from './transaction.model.js';
 import Account from '../accounts/account.model.js';
 import Deposit from '../deposits/deposit.model.js';
+import { request, response } from 'express';
 
 
 export const createTransaction = async (req, res) => {
@@ -147,7 +148,7 @@ export const getTransactionsByUser = async (req, res) => {
       status: true
     })
       .sort({ createdAt: -1 })
-      .populate('accountId'); 
+      .populate('accountId');
 
     const transactionsWithDestAccount = await Promise.all(
       transactions.map(async (tx) => {
@@ -179,7 +180,7 @@ export const getTransactionsByUser = async (req, res) => {
 
 export const getTransactions = async (req, res) => {
   try {
-    const { accountId, limit = 10, skip = 0 } = req.query;
+    const { accountId, limit = 5, skip = 0 } = req.query;
 
     const query = { status: true };
     if (accountId) {
@@ -230,6 +231,31 @@ export const getTransactions = async (req, res) => {
     });
   }
 };
+
+// export const getTransactionsAdmin = async (req = request, res = response) => {
+//   try {
+//     const { limite = 10, desde = 0 } = req.query;
+//     const query = { status: true };
+//     const [total, transactions] = await Promise.all([
+//       Transaction.countDocuments(query),
+//       Transaction.find(query)
+//         .skip(Number(desde))
+//         .limit(Number(limite))
+//     ])
+
+//     res.status(200).json({
+//       success: true,
+//       total,
+//       transactions
+//     })
+//   } catch (error) {
+//     res.status(500).json({
+//       success: false,
+//       msg: "Error to fetch transactions",
+//       error
+//     })
+//   }
+// }
 
 
 export const getTransactionById = async (req, res) => {
