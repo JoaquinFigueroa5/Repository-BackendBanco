@@ -32,9 +32,7 @@ router.post(
         check("amount", "Amount is required").not().isEmpty(),
         check("amount", "Amount must be a positive number").isDecimal({ gt: 0 }),
         check("details", "Details must be between 5 and 100 characters").isLength({ max: 75 }),
-        check("destinationAccountId", "Destination account ID is required").not().isEmpty(),
-        check("destinationAccountId", "Destination account ID must be a valid ID").isMongoId(),
-        check("destinationAccountId").custom(destinationAccountById),
+
         validateFields,
     ],
     createTransaction

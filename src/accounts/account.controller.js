@@ -128,3 +128,30 @@ export const updateAccount = async (req, res) => {
         });
     }
 }
+
+
+export const getUserAccount = async (req = request, res = response) => {
+  try {
+    const userId = req.usuario._id;
+
+    const account = await Account.findOne({ userId, status: true });
+
+    if (!account) {
+      return res.status(404).json({
+        success: false,
+        msg: "No se encontró una cuenta activa para este usuario.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      account,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      msg: "Error al obtener la cuenta del usuario.",
+      error,
+    });
+  }
+};
