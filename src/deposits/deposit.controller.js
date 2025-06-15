@@ -3,7 +3,6 @@ import Account from '../accounts/account.model.js';
 
 export const createDeposit = async (req, res) => {
     try {
-
         const { numberAccount, amount } = req.body;
 
         const account = await Account.findOne({ accountNumber: numberAccount });
@@ -19,26 +18,29 @@ export const createDeposit = async (req, res) => {
         await account.save();
 
         const deposit = new Deposit({
-            numberAccount,
-            amount,
-        })
+            numberAccount: account._id,
+            amount
+        });
 
         await deposit.save();
+
+        const savedDeposit = await deposit.populate('numberAccount', 'accountNumber');
 
         return res.status(201).json({
             success: true,
             msg: 'Deposit created successfully',
-            deposit
+            deposit: savedDeposit
         });
-        
+
     } catch (error) {
         return res.status(500).json({
             success: false,
-            msg:'An error occurred while creating the deposit',
+            msg: 'An error occurred while creating the deposit',
             error: error.message
-        })
+        });
     }
-}
+};
+
 
 export const revertDeposit = async (req, res) => {
     try {
@@ -59,7 +61,7 @@ export const revertDeposit = async (req, res) => {
                 msg: 'Deposit has already been reverted'
             })
         }
-        
+
         const now = new Date();
         const diffSeconds = (now - deposit.depositDate) / 1000;
 
