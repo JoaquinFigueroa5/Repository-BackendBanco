@@ -141,31 +141,52 @@ export const getTransactionsByUser = async (req, res) => {
 
     const userAccounts = await Account.find({ userId, status: true });
 
-    const accountIds = userAccounts.map(account => account._id);
+    const accountIds = userAccounts.map(acc => acc._id);
+    const accountNumbers = userAccounts.map(acc => acc.accountNumber);
 
-    const transactions = await Transaction.find({
+    const sentTransactions = await Transaction.find({
       accountId: { $in: accountIds },
       status: true
     })
       .sort({ createdAt: -1 })
       .populate('accountId');
 
-    const transactionsWithDestAccount = await Promise.all(
-      transactions.map(async (tx) => {
+    const receivedTransactions = await Transaction.find({
+      destinationNumberAccount: { $in: accountNumbers },
+      status: true
+    })
+      .sort({ createdAt: -1 })
+      .populate('accountId');
+
+    const sentWithDestInfo = await Promise.all(
+      sentTransactions.map(async (tx) => {
         const destAccount = await Account.findOne({ accountNumber: tx.destinationNumberAccount });
         return {
           ...tx.toObject(),
+          type: 'sent',
           destinationAccount: destAccount || null
         };
       })
     );
 
+    const receivedWithSenderInfo = await Promise.all(
+      receivedTransactions.map(async (tx) => {
+        const originAccount = await Account.findById(tx.accountId);
+        return {
+          ...tx.toObject(),
+          type: 'received',
+          originAccount: originAccount || null
+        };
+      })
+    );
+
+    const allTransactions = [...sentWithDestInfo, ...receivedWithSenderInfo]
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
     res.status(200).json({
       success: true,
-      transactions: transactionsWithDestAccount
+      transactions: allTransactions
     });
-
 
   } catch (error) {
     console.error(error);
@@ -176,6 +197,7 @@ export const getTransactionsByUser = async (req, res) => {
     });
   }
 };
+
 
 
 export const getTransactions = async (req, res) => {
