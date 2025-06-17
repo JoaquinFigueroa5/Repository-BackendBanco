@@ -15,7 +15,7 @@ export const createTransaction = async (req, res) => {
       });
     }
 
-    if (type === 'Transferencia' && Number(amount) > 2000) {
+    if (type === 'Transferencia' && Number(amount) >= 2000) {
       return res.status(400).json({
         success: false,
         message: 'Amount cannot exceed Q2000 for Transferencias'

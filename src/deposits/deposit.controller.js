@@ -46,8 +46,8 @@ export const revertDeposit = async (req, res) => {
     try {
 
         const { id } = req.params;
-        const deposit = await Deposit.findById(id);
-
+        const deposit = await Deposit.findById(id).populate('numberAccount')
+        
         if (!deposit) {
             return res.status(404).json({
                 success: false,
@@ -71,8 +71,9 @@ export const revertDeposit = async (req, res) => {
                 msg: 'Cannot revert, more than 1 minute has passed'
             })
         }
-
-        const account = await Account.findOne({ accountNumber: deposit.numberAccount });
+        
+        const account = await Account.findOne({ accountNumber: deposit.numberAccount.accountNumber });
+        
         if (!account) {
             return res.status(404).json({
                 success: false,
@@ -103,7 +104,7 @@ export const revertDeposit = async (req, res) => {
 export const getDeposits = async (req, res) => {
     try {
 
-        const deposits = await Deposit.find();
+        const deposits = await Deposit.find().populate('numberAccount')
         return res.status(200).json({
             success: true,
             deposits
