@@ -9,7 +9,9 @@ export const getAccounts = async (req = request, res = response) => {
     const query = { status: true };
     const [total, accounts] = await Promise.all([
       Account.countDocuments(query),
-      Account.find(query).skip(Number(desde)).limit(Number(limite)),
+      Account.find(query).skip(Number(desde)).limit(Number(limite)).populate({
+        path: 'userId'
+      })
     ]);
 
     res.status(200).json({
@@ -51,82 +53,82 @@ export const getAccountsById = async (req, res) => {
 };
 
 export const createAccounts = async (req, res) => {
-    try {
-        const data = req.body;
-        const user = await User.findById(data.userId);
+  try {
+    const data = req.body;
+    const user = await User.findById(data.userId);
 
-        if (!user) {
-            return res.status(404).json({
-                success: false,
-                msg: "Usuario no encontrado",
-            });
-        }
-
-        if (user.role !== 'USER_ROLE') {
-            return res.status(403).json({
-                success: false,
-                msg: "Solo los usuarios pueden tener una cuenta",
-            });
-        }
-
-        const existingAccount = await Account.findOne({ userId: data.userId });
-        if (existingAccount) {
-            return res.status(400).json({
-                success: false,
-                msg: "Este usuario ya tiene una cuenta",
-            });
-        }
-
-        const accountNumber = await generateUniqueAccountNumber();
-
-        const account = new Account({
-            ...data,
-            userId: user._id,
-            accountNumber,
-        });
-
-        await account.save();
-
-        res.status(201).json({
-            success: true,
-            msg: "Se creó la cuenta con éxito",
-            account,
-        });
-
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            msg: "Se produjo un error al crear la cuenta",
-        });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: "Usuario no encontrado",
+      });
     }
+
+    if (user.role !== 'USER_ROLE') {
+      return res.status(403).json({
+        success: false,
+        msg: "Solo los usuarios pueden tener una cuenta",
+      });
+    }
+
+    const existingAccount = await Account.findOne({ userId: data.userId });
+    if (existingAccount) {
+      return res.status(400).json({
+        success: false,
+        msg: "Este usuario ya tiene una cuenta",
+      });
+    }
+
+    const accountNumber = await generateUniqueAccountNumber();
+
+    const account = new Account({
+      ...data,
+      userId: user._id,
+      accountNumber,
+    });
+
+    await account.save();
+
+    res.status(201).json({
+      success: true,
+      msg: "Se creó la cuenta con éxito",
+      account,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      msg: "Se produjo un error al crear la cuenta",
+    });
+  }
 };
 export const updateAccount = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { _id, userId, accountNumber, ...data } = req.body;
-        const searchAccount = await Account.findById(id);
+  try {
+    const { id } = req.params;
+    const { _id, userId, accountNumber, ...data } = req.body;
+    const searchAccount = await Account.findById(id);
 
-        if (!searchAccount) {
-            return res.status(404).json({
-                success: false,
-                msg: "Cuenta no encontrada"
-            })
-        }
-
-        const account = await Account.findByIdAndUpdate(id, data, {new: true});
-
-        res.status(200).json({
-            success: true,
-            msg: "Se edito la cuenta con exito",
-            account
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            msg: "Ocurrio un error al editar la cuenta",
-            error
-        });
+    if (!searchAccount) {
+      return res.status(404).json({
+        success: false,
+        msg: "Cuenta no encontrada"
+      })
     }
+
+    const account = await Account.findByIdAndUpdate(id, data, { new: true });
+
+    res.status(200).json({
+      success: true,
+      msg: "Se edito la cuenta con exito",
+      account
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      msg: "Ocurrio un error al editar la cuenta",
+      error
+    });
+  }
 }
 
 

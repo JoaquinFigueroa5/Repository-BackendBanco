@@ -114,7 +114,17 @@ export const toggleFavorite = async (req, res) => {
         const { id } = req.params;
         const userId = req.usuario._id;
 
-        const user = await User.findById(userId);
+        const user = await User.findById(userId)
+            .populate({
+                path: 'favorites',
+                model: 'Account',
+                select: 'userId accountNumber balance status',
+                populate: {
+                    path: 'userId',
+                    model: 'User',
+                    select: 'name surname'
+                }
+            });
         const account = await Account.findById(id);
 
         if (!user) {
