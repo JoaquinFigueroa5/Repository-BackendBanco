@@ -70,6 +70,11 @@ const UserSchema = Schema(
             enum: ["ADMIN_ROLE", "USER_ROLE"],
             default: "USER_ROLE"
         },
+        favorites: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Account',
+            default: []
+        }],
         status: {
             type: Boolean,
             default: true

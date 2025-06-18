@@ -47,7 +47,7 @@ export const revertDeposit = async (req, res) => {
 
         const { id } = req.params;
         const deposit = await Deposit.findById(id).populate('numberAccount')
-        
+
         if (!deposit) {
             return res.status(404).json({
                 success: false,
@@ -73,7 +73,7 @@ export const revertDeposit = async (req, res) => {
         }
         
         const account = await Account.findOne({ accountNumber: deposit.numberAccount.accountNumber });
-        
+
         if (!account) {
             return res.status(404).json({
                 success: false,
