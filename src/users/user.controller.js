@@ -109,41 +109,93 @@ export const getUserProfile = (req, res) => {
     }
 }
 
-export const updateFavorites = async (req, res) => {
+export const toggleFavorite = async (req, res) => {
     try {
-        const userId = req.usuario._id;
         const { id } = req.params;
+        const userId = req.usuario._id;
 
+        const user = await User.findById(userId);
         const account = await Account.findById(id);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                msg: 'User not found'
+            });
+        }
 
         if (!account) {
             return res.status(404).json({
                 success: false,
-                msg: "Account not found"
+                msg: 'Account not found'
             });
         }
 
-        const user = await User.findById(userId);       
-        
-        console.log(user);
-        
-        if (!user.favorites.includes(account._id)) {
-            user.favorites.push(account._id);
-            await user.save();
+        if (!Array.isArray(user.favorites)) {
+            user.favorites = [];
         }
 
-        res.status(200).json({
-            success: true,
-            msg: "Cuenta añadida a favoritos",
-            favorites: user.favorites
-        });
+        const index = user.favorites.findIndex(favId => favId.toString() === id);
+
+        if (index >= 0) {
+            user.favorites.splice(index, 1);
+            await user.save();
+            return res.status(200).json({
+                success: true,
+                msg: 'Account removed from favorites',
+                favorites: user.favorites
+            });
+        } else {
+            user.favorites.push(account._id);
+            await user.save();
+            return res.status(200).json({
+                success: true,
+                msg: 'Account added to favorites',
+                favorites: user.favorites
+            });
+        }
 
     } catch (error) {
-        console.error(error);
         res.status(500).json({
             success: false,
-            msg: "Error al añadir a favoritos",
+            msg: 'Error toggling favorite',
             error: error.message
         });
     }
 };
+
+export const getAccountsFavorites = async (req, res) => {
+    try {
+        const userId = req.usuario._id;
+
+        const user = await User.findById(userId)
+            .populate({
+                path: 'favorites',
+                model: 'Account',
+                select: 'userId accountNumber balance status',
+                populate: {
+                    path: 'userId',
+                    model: 'User',
+                    select: 'name surname'
+                }
+            });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                msg: 'User not found',
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            favorites: user.favorites,
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            msg: 'Error retrieving favorites',
+            error: error.message,
+        });
+    }
+}
