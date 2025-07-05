@@ -109,23 +109,49 @@ export const getUserProfile = (req, res) => {
     }
 }
 
-export const toggleFavorite = async (req, res) => {
+export const addFavorite = async (req, res) => {
     try {
-        const { id } = req.params;
-        const userId = req.usuario._id;
+        const userId = req.usuario._id; // Usuario autenticado
+        const { id } = req.params; // ID de la cuenta a agregar a favoritos
 
-        const user = await User.findById(userId)
-            .populate({
-                path: 'favorites',
-                model: 'Account',
-                select: 'userId accountNumber balance status',
-                populate: {
-                    path: 'userId',
-                    model: 'User',
-                    select: 'name surname'
-                }
-            });
         const account = await Account.findById(id);
+
+        if (!account) {
+            return res.status(404).json({
+                success: false,
+                msg: "Account not found"
+            });
+        }
+
+        const user = await User.findById(userId);
+
+        if (!user.favorites.includes(account._id)) {
+            user.favorites.push(account._id);
+            await user.save();
+        }
+
+        res.status(200).json({
+            success: true,
+            msg: "Cuenta añadida a favoritos",
+            favorites: user.favorites
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            msg: "Error al añadir a favoritos",
+            error: error.message
+        });
+    }
+};
+
+export const removeFavorite = async (req, res) => {
+    try {
+        const { id } = req.params; // ID de la cuenta a eliminar de favoritos
+        const userId = req.usuario._id; // ID del usuario autenticado
+
+        const user = await User.findById(userId);
 
         if (!user) {
             return res.status(404).json({
@@ -134,45 +160,30 @@ export const toggleFavorite = async (req, res) => {
             });
         }
 
-        if (!account) {
-            return res.status(404).json({
-                success: false,
-                msg: 'Account not found'
-            });
-        }
-
         if (!Array.isArray(user.favorites)) {
             user.favorites = [];
         }
 
-        const index = user.favorites.findIndex(favId => favId.toString() === id);
+        // Filtrar la cuenta que se quiere eliminar
+        user.favorites = user.favorites.filter(favId => favId.toString() !== id);
 
-        if (index >= 0) {
-            user.favorites.splice(index, 1);
-            await user.save();
-            return res.status(200).json({
-                success: true,
-                msg: 'Account removed from favorites',
-                favorites: user.favorites
-            });
-        } else {
-            user.favorites.push(account._id);
-            await user.save();
-            return res.status(200).json({
-                success: true,
-                msg: 'Account added to favorites',
-                favorites: user.favorites
-            });
-        }
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            msg: 'Favorite removed successfully',
+            favorites: user.favorites
+        });
 
     } catch (error) {
         res.status(500).json({
             success: false,
-            msg: 'Error toggling favorite',
+            msg: 'Error removing favorite',
             error: error.message
         });
     }
 };
+
 
 export const getAccountsFavorites = async (req, res) => {
     try {

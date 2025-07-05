@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { deleteUser, getUserProfile, getUsers, updateUser, toggleFavorite, getAccountsFavorites } from "./user.controller.js";
+import { deleteUser, getUserProfile, getUsers, updateUser, addFavorite, removeFavorite, getAccountsFavorites } from "./user.controller.js";
 import { existUserById, existUsername } from "../helpers/db-validator.js";
 import { validateFields } from "../middlewares/validate-fields.js";
 import { validateJWT } from "../middlewares/validate-jwt.js";
@@ -60,11 +60,19 @@ router.get(
 )
 
 router.put(
-    '/favorite/:id',
+    '/addFavorite/:id',
     [
         validateJWT
     ],
-    toggleFavorite
+    addFavorite
+)
+
+router.put(
+    '/removeFavorites/:id',
+    [
+        validateJWT
+    ],
+    removeFavorite
 )
 
 export default router;
