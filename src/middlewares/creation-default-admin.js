@@ -11,7 +11,8 @@ export const createAdmin = async () => {
                 username: "ADMINB",
                 email: "ADMINB@gmail.com",
                 password: hashed,
-                role: "ADMIN_ROLE"
+                role: "ADMIN_ROLE",
+                products: [],
             });
 
             await adminUser.save();

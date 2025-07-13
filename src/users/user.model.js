@@ -78,7 +78,12 @@ const UserSchema = Schema(
         status: {
             type: Boolean,
             default: true
-        }
+        },
+        products: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Product',
+            default: []
+        }]
     },
     {
         timestamps: true,
