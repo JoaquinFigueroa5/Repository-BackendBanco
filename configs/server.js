@@ -9,6 +9,8 @@ import userRoutes from '../src/users/user.routes.js'
 import productRoutes from '../src/products/product.routes.js'
 import depositRoutes from '../src/deposits/deposit.routes.js'
 import { createAdmin } from "../src/middlewares/creation-default-admin.js";
+import { createProducts } from "../src/middlewares/creation-default-product.js";
+import { createBankmain } from "../src/middlewares/creation-bancMainAccount.js";
 import accountRoutes from "../src/accounts/account.routes.js"
 import transactionRoutes from "../src/transaction/transaction.routes.js";
 import { createRoles } from "../src/role/role.controller.js";
@@ -50,6 +52,8 @@ export const initServer = async () => {
         app.listen(port);
         createAdmin();
         createRoles();
+        createProducts();
+        createBankmain();
         console.log(`server running on port ${port}`)
     } catch (error) {
         console.log(`server init failed: ${error}`);

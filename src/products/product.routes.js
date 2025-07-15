@@ -2,7 +2,7 @@ import { Router } from "express";
 import { check } from "express-validator";
 import { validateJWT } from "../middlewares/validate-jwt.js";
 import { validateFields } from "../middlewares/validate-fields.js";
-import { deleteProduct, getProduct, getAllProducts, saveProduct, updateProduct, reactivateProduct } from "./product.controller.js";
+import { deleteProduct, getProduct, getAllProducts, saveProduct, updateProduct, reactivateProduct,buyProduct } from "./product.controller.js";
 import { validateProduct } from "../middlewares/validate-product.js";
 
 const router = Router();
@@ -53,6 +53,12 @@ router.delete(
         validateFields
     ],
     deleteProduct
+)
+
+router.post(
+    "/buyProduct",
+    validateJWT,
+    buyProduct
 )
 
 
