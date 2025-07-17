@@ -1,18 +1,114 @@
 [{
   "_id": {
-    "$oid": "6844efc801e98dd859842112"
+    "$oid": "6868b72f78d63292c19f83e0"
   },
-  "name": "Telefono",
-  "description": "Telefono neggers",
+  "name": "Espada",
+  "description": "Espada de minecraft",
   "price": {
-    "$numberDecimal": "15.83"
+    "$numberDecimal": "120"
   },
   "asset": true,
+  "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLEOxxX4UO_1nE8c5MB-7DL1ZWaUilrPB5XA&s",
   "status": true,
   "createdAt": {
-    "$date": "2025-06-08T02:04:56.212Z"
+    "$date": "2025-07-05T05:25:03.273Z"
   },
   "updatedAt": {
-    "$date": "2025-06-08T02:04:56.212Z"
+    "$date": "2025-07-05T05:25:16.926Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6868b85678d63292c19f83ed"
+  },
+  "name": "Creeper",
+  "description": "Awwww man",
+  "price": {
+    "$numberDecimal": "200"
+  },
+  "asset": true,
+  "image": "https://upload.wikimedia.org/wikipedia/commons/1/10/Userbox_creeper.svg",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-05T05:29:58.505Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-05T05:31:00.912Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6875e605ed8ac5354ac4c993"
+  },
+  "name": "Bitcoin",
+  "description": "La criptomoneda mas utilizada del mundo",
+  "price": {
+    "$numberDecimal": "118171"
+  },
+  "asset": true,
+  "image": "https://news-cdn.softpedia.com/images/news2/bitcoin-prices-hit-all-time-high-it-s-now-worth-more-than-gold-513510-2.jpg",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-15T05:24:21.966Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-15T05:24:21.966Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6875e605ed8ac5354ac4c99a"
+  },
+  "name": "Dolares",
+  "description": "La moneda mas utilizada del mundo",
+  "price": {
+    "$numberDecimal": "7.56"
+  },
+  "asset": true,
+  "image": "https://tse4.mm.bing.net/th/id/OIP.tpxYYFSUST5DlA37iQWLywHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-15T05:24:21.999Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-15T05:24:21.999Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6875e606ed8ac5354ac4c99c"
+  },
+  "name": "BOTZ",
+  "description": "Global X Robotics & Artificial Intelligence ETF (BOTZ)",
+  "price": {
+    "$numberDecimal": "32.27"
+  },
+  "asset": true,
+  "image": "https://yulon.co.kr/wp-content/uploads/2023/08/BOTZ-%EC%8D%B8%EB%84%A4%EC%9D%BC.png",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-15T05:24:22.003Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-15T05:24:22.003Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6875e606ed8ac5354ac4c99e"
+  },
+  "name": "VOO",
+  "description": "Vanguard S&P 500 ETF (VOO)",
+  "price": {
+    "$numberDecimal": "573.22"
+  },
+  "asset": true,
+  "image": "https://pictureperfectportfolios.com/wp-content/uploads/2024/01/voo-etf-vanguard-s-p-500-fund-logo-700x419.jpg.webp",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-15T05:24:22.006Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-15T05:24:22.006Z"
   }
 }]

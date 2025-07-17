@@ -1,38 +1,92 @@
 [{
   "_id": {
-    "$oid": "6845f523ec7de6fbad90177a"
+    "$oid": "685c9c1475ac3677fa38bb0d"
   },
   "userId": {
-    "$oid": "6844d8ea700bd4cee5f19ebc"
+    "$oid": "685c9c1475ac3677fa38bb0a"
   },
-  "accountNumber": "0321398832",
+  "accountNumber": "2730591473",
   "balance": {
-    "$numberDecimal": "10125.00"
+    "$numberDecimal": "450.00"
   },
   "status": true,
   "createdAt": {
-    "$date": "2025-06-08T20:40:03.118Z"
+    "$date": "2025-06-26T01:02:12.973Z"
   },
   "updatedAt": {
-    "$date": "2025-06-08T23:50:22.006Z"
+    "$date": "2025-07-16T06:21:27.991Z"
   }
 },
 {
   "_id": {
-    "$oid": "6845f681ec7de6fbad90178f"
+    "$oid": "685c9c4e75ac3677fa38bb26"
   },
   "userId": {
-    "$oid": "6845f5ecec7de6fbad901783"
+    "$oid": "685c9c4e75ac3677fa38bb23"
   },
-  "accountNumber": "3274448637",
+  "accountNumber": "9434415969",
   "balance": {
-    "$numberDecimal": "10590.00"
+    "$numberDecimal": "600.00"
   },
   "status": true,
   "createdAt": {
-    "$date": "2025-06-08T20:45:53.349Z"
+    "$date": "2025-06-26T01:03:10.832Z"
   },
   "updatedAt": {
-    "$date": "2025-06-08T23:50:21.998Z"
+    "$date": "2025-07-16T04:07:27.867Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6868a9bac35993cd6f6ee0c6"
+  },
+  "userId": {
+    "$oid": "6868a9bac35993cd6f6ee0c3"
+  },
+  "accountNumber": "1926171298",
+  "balance": {
+    "$numberDecimal": "400.00"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-05T04:27:38.060Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-16T04:06:51.500Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68772df7ba0f5d7e52cb54d7"
+  },
+  "userId": {
+    "$oid": "68772df7ba0f5d7e52cb54d4"
+  },
+  "accountNumber": "4837327101",
+  "balance": {
+    "$numberDecimal": "100.00"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-16T04:43:35.880Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-16T06:21:28.013Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68783de87ccff7494e52f57a"
+  },
+  "accountNumber": "0000000001",
+  "balance": {
+    "$numberDecimal": "10000000"
+  },
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-17T00:03:52.835Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-17T00:03:52.835Z"
   }
 }]

@@ -1,66 +1,130 @@
 [{
   "_id": {
-    "$oid": "6842601df89c6eb2c5227d74"
+    "$oid": "685c9b7475ac3677fa38bafb"
   },
   "username": "ADMINB",
   "email": "ADMINB@gmail.com",
-  "password": "$argon2id$v=19$m=65536,t=3,p=4$bvJcpDPHBC1DrC9t9XK0gQ$PK21UepibVH8YIYM8k+rR5YycLlLBDAcwqaU28SguC8",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$Q7E/sUzPQOPAZU3M8yCXFQ$8QouTkJokSRQlc+ZD7fTWPcP8DLfcwmCYoFqIiJHHQ4",
   "role": "ADMIN_ROLE",
+  "favorites": [],
   "status": true,
   "createdAt": {
-    "$date": "2025-06-06T03:27:25.768Z"
+    "$date": "2025-06-26T00:59:32.961Z"
   },
   "updatedAt": {
-    "$date": "2025-06-06T03:27:25.768Z"
+    "$date": "2025-06-26T00:59:32.961Z"
   }
 },
 {
   "_id": {
-    "$oid": "6844d8ea700bd4cee5f19ebc"
-  },
-  "name": "Lisandro",
-  "surname": "Jimenez",
-  "username": "ljimenez",
-  "dpi": "7485124563258",
-  "address": "Bucaro",
-  "work": "Ingeniero",
-  "income": {
-    "$numberDecimal": "100"
-  },
-  "email": "ljimenez@gmail.com",
-  "password": "$argon2id$v=19$m=65536,t=3,p=4$sORfk7zhoL0vJe8DTdeEcA$Md32zxw+ATHpD4ErjivhwSXxBRicxkm8J5gIfC8ur0U",
-  "phone": "12345678",
-  "role": "USER_ROLE",
-  "status": true,
-  "createdAt": {
-    "$date": "2025-06-08T00:27:22.135Z"
-  },
-  "updatedAt": {
-    "$date": "2025-06-08T00:27:22.135Z"
-  }
-},
-{
-  "_id": {
-    "$oid": "6845f5ecec7de6fbad901783"
+    "$oid": "685c9c1475ac3677fa38bb0a"
   },
   "name": "Joaquin",
   "surname": "Figueroa",
-  "username": "joaki",
-  "dpi": "7485124563259",
-  "address": "Bucaro",
-  "work": "Ingeniero",
+  "username": "Joaki",
+  "dpi": "3506030300101",
+  "address": "Zona 18",
+  "work": "Ingeniero en software",
   "income": {
-    "$numberDecimal": "100"
+    "$numberDecimal": "7000"
   },
   "email": "joaki@gmail.com",
-  "password": "$argon2id$v=19$m=65536,t=3,p=4$qhkCZXyxhpt6aTh7dRyDYA$siIiVbhkn9hmtFzwAJ1u+pM9++gTLqjRSWNHFyC2S5w",
-  "phone": "12345678",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$mOyQWKTOrEM/jjWA3VwnqA$mJLODxpKO58UHusEClCqUKmuvCo5nWYNuZMeL58S2Ec",
+  "phone": "58694127",
   "role": "USER_ROLE",
+  "favorites": [
+    {
+      "$oid": "685c9c4e75ac3677fa38bb26"
+    },
+    {
+      "$oid": "6868a9bac35993cd6f6ee0c6"
+    }
+  ],
   "status": true,
   "createdAt": {
-    "$date": "2025-06-08T20:43:24.079Z"
+    "$date": "2025-06-26T01:02:12.967Z"
   },
   "updatedAt": {
-    "$date": "2025-06-08T20:43:24.079Z"
+    "$date": "2025-07-16T00:35:42.715Z"
+  },
+  "products": []
+},
+{
+  "_id": {
+    "$oid": "685c9c4e75ac3677fa38bb23"
+  },
+  "name": "Alejandra",
+  "surname": "Ojeda",
+  "username": "waexoi",
+  "dpi": "1234567890987",
+  "address": "Zona 18",
+  "work": "Abogada",
+  "income": {
+    "$numberDecimal": "5000"
+  },
+  "email": "alejandra@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$U4hW8I219+Jbxzs+1APhgQ$wrc1S1mzYAc2AmRGkzYsreOCyERIQXdBmhKys/Y24Dk",
+  "phone": "12345678",
+  "role": "USER_ROLE",
+  "favorites": [],
+  "status": true,
+  "createdAt": {
+    "$date": "2025-06-26T01:03:10.825Z"
+  },
+  "updatedAt": {
+    "$date": "2025-06-26T01:03:10.825Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6868a9bac35993cd6f6ee0c3"
+  },
+  "name": "Bany",
+  "surname": "Quiñonez",
+  "username": "cuco",
+  "dpi": "1234567890983",
+  "address": "Zona 18",
+  "work": "USAC",
+  "income": {
+    "$numberDecimal": "8000"
+  },
+  "email": "cuco@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$NlRU/Yrb+gGz1OGyFgoAQQ$Ca740o0KO/I8daGe9MC5zMC7/Z2gnsj+RiOn6ga0loU",
+  "phone": "12345678",
+  "role": "USER_ROLE",
+  "favorites": [],
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-05T04:27:38.045Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-05T04:28:35.870Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68772df7ba0f5d7e52cb54d4"
+  },
+  "name": "Saul",
+  "surname": "De Leon",
+  "username": "gokusaul",
+  "dpi": "1234567890123",
+  "address": "Jutiapa",
+  "work": "Ingeniero en sistemas",
+  "income": {
+    "$numberDecimal": "9000"
+  },
+  "email": "saul@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$aVq9qGKJMe3W4f+1yk2OZA$+LlfPT66HTU+Qj6q5RMq+3i8GmkiWnxY2ZFbt9C2fAk",
+  "phone": "12345678",
+  "role": "USER_ROLE",
+  "favorites": [],
+  "status": true,
+  "products": [],
+  "createdAt": {
+    "$date": "2025-07-16T04:43:35.873Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-16T04:43:35.873Z"
   }
 }]
