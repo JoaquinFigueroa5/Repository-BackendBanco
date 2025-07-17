@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { createTransaction, getTransactions, getTransactionById, updateTransaction, getTransactionsByUser, deleteTransaction } from "./transaction.controller.js";
+import { createTransaction, getTransactions, getTransactionById, updateTransaction, getTransactionsByUser, getTransactionByIdUser, deleteTransaction } from "./transaction.controller.js";
 import { validateFields } from "../middlewares/validate-fields.js";
 import { existAccountById, destinationAccountById } from "../helpers/db-validator.js";
 import { validateJWT } from "../middlewares/validate-jwt.js";
@@ -68,6 +68,14 @@ router.delete(
         validateFields,
     ],
     deleteTransaction
+)
+
+router.get(
+    "/admin/:userId",
+    [
+        validateJWT
+    ],  
+    getTransactionByIdUser
 )
 
 export default router;

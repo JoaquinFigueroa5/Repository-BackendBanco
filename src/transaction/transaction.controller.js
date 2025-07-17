@@ -2,7 +2,7 @@ import Transaction from './transaction.model.js';
 import Account from '../accounts/account.model.js';
 import Deposit from '../deposits/deposit.model.js';
 import { request, response } from 'express';
-
+import mongoose from 'mongoose';
 
 export const createTransaction = async (req, res) => {
   try {
@@ -381,6 +381,92 @@ export const deleteTransaction = async (req, res) => {
       success: false,
       message: 'Error deactivating transaction',
       error
+    });
+  }
+};
+export const getTransactionByIdUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { limit = 5, skip = 0 } = req.query;
+    const { role } = req.usuario;
+
+    if (role !== 'ADMIN_ROLE') {
+      return res.status(403).json({
+        success: false,
+        message: 'Access denied. Only admins can view transactions of other users.'
+      });
+    }
+
+    if (!mongoose.isValidObjectId(userId)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid userId format'
+      });
+    }
+
+    const userIdObject = new mongoose.Types.ObjectId(userId);
+
+    const userAccounts = await Account.find({ userId: userIdObject, status: true });
+
+    if (!userAccounts.length) {
+      return res.status(404).json({
+        success: false,
+        message: 'No accounts found for this user'
+      });
+    }
+
+    const accountIds = userAccounts.map(acc => acc._id);
+    const accountNumbers = userAccounts.map(acc => acc.accountNumber);
+
+    // Traer todas las transacciones (sin límite ni skip)
+    const sentTransactions = await Transaction.find({
+      accountId: { $in: accountIds },
+      status: true
+    })
+      .populate('accountId');
+
+    const receivedTransactions = await Transaction.find({
+      destinationNumberAccount: { $in: accountNumbers },
+      status: true
+    })
+      .populate('accountId');
+
+    const sentWithDestInfo = await Promise.all(
+      sentTransactions.map(async (tx) => {
+        const destAccount = await Account.findOne({ accountNumber: tx.destinationNumberAccount });
+        return {
+          ...tx.toObject(),
+          type: 'sent',
+          destinationAccount: destAccount || null
+        };
+      })
+    );
+
+    const receivedWithSenderInfo = receivedTransactions.map((tx) => ({
+      ...tx.toObject(),
+      type: 'received',
+      originAccount: tx.accountId || null
+    }));
+
+    // Combinar y ordenar todas las transacciones por fecha (más recientes primero)
+    const allTransactionsSorted = [...sentWithDestInfo, ...receivedWithSenderInfo]
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    // Aplicar skip y limit sobre el arreglo ya ordenado
+    const paginatedTransactions = allTransactionsSorted.slice(Number(skip), Number(skip) + Number(limit));
+
+    res.status(200).json({
+      success: true,
+      total: allTransactionsSorted.length, 
+      transactions: paginatedTransactions
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: 'Error getting user transactions',
+      error: error.message
     });
   }
 };
