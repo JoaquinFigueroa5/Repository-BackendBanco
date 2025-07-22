@@ -170,3 +170,38 @@ export const getDepositsByAccount = async (req, res) => {
         });
     }
 }
+
+export const getDepositsHistory = async (req, res) => {
+    try {
+        
+        const userId = req.usuario._id;
+        const account = await Account.findOne({ userId })
+
+        if (!account) {
+            return res.status(404).json({
+                success: false,
+                msg: 'No account found for the user'
+            })
+        }
+
+        const deposits = await Deposit.find({
+            numberAccount: account._id,
+            reversed: false
+        })
+            .populate('numberAccount', 'accountNumber')
+            .sort({ depositDate: -1 });
+
+
+        return res.status(200).json({
+            success: true,
+            deposits
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            msg: 'Error fetching history',
+            error: error.message
+        })
+    }
+}
