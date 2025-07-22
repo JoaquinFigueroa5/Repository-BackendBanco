@@ -111,4 +111,23 @@
   "updatedAt": {
     "$date": "2025-07-15T05:24:22.006Z"
   }
+},
+{
+  "_id": {
+    "$oid": "687d7b0f471575c3139e5bd7"
+  },
+  "name": "Steve",
+  "description": "Pendejo",
+  "price": {
+    "$numberDecimal": "1"
+  },
+  "asset": true,
+  "image": "https://minecraft.wiki/images/Steve_%28classic%29_JE6.png?c0d48",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-20T23:26:07.253Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-20T23:26:07.253Z"
+  }
 }]

@@ -12,7 +12,7 @@
     "$date": "2025-06-26T00:59:32.961Z"
   },
   "updatedAt": {
-    "$date": "2025-06-26T00:59:32.961Z"
+    "$date": "2025-07-21T01:08:40.827Z"
   }
 },
 {
@@ -34,10 +34,10 @@
   "role": "USER_ROLE",
   "favorites": [
     {
-      "$oid": "685c9c4e75ac3677fa38bb26"
+      "$oid": "68772df7ba0f5d7e52cb54d7"
     },
     {
-      "$oid": "6868a9bac35993cd6f6ee0c6"
+      "$oid": "687d7ca8471575c3139e5c8f"
     }
   ],
   "status": true,
@@ -45,7 +45,7 @@
     "$date": "2025-06-26T01:02:12.967Z"
   },
   "updatedAt": {
-    "$date": "2025-07-16T00:35:42.715Z"
+    "$date": "2025-07-21T01:14:49.289Z"
   },
   "products": []
 },
@@ -66,14 +66,22 @@
   "password": "$argon2id$v=19$m=65536,t=3,p=4$U4hW8I219+Jbxzs+1APhgQ$wrc1S1mzYAc2AmRGkzYsreOCyERIQXdBmhKys/Y24Dk",
   "phone": "12345678",
   "role": "USER_ROLE",
-  "favorites": [],
+  "favorites": [
+    {
+      "$oid": "68772df7ba0f5d7e52cb54d7"
+    },
+    {
+      "$oid": "685c9c1475ac3677fa38bb0d"
+    }
+  ],
   "status": true,
   "createdAt": {
     "$date": "2025-06-26T01:03:10.825Z"
   },
   "updatedAt": {
-    "$date": "2025-06-26T01:03:10.825Z"
-  }
+    "$date": "2025-07-18T05:12:33.667Z"
+  },
+  "products": []
 },
 {
   "_id": {
@@ -126,5 +134,32 @@
   },
   "updatedAt": {
     "$date": "2025-07-16T04:43:35.873Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687d90b3ff1dac67cb380e23"
+  },
+  "name": "Jorge",
+  "surname": "Peralta",
+  "username": "Pepa",
+  "dpi": "1234567890174",
+  "address": "Amatitlan",
+  "work": "Kinal",
+  "income": {
+    "$numberDecimal": "200"
+  },
+  "email": "pepa@gmail.com",
+  "password": "$argon2id$v=19$m=65536,t=3,p=4$WyZwB3wk+Ubr0nyhYJslVA$5vu5AAbV4xyoLmFS9ijo9BQQVa9H8jn6Azgvu3siFrw",
+  "phone": "12345678",
+  "role": "USER_ROLE",
+  "favorites": [],
+  "status": true,
+  "products": [],
+  "createdAt": {
+    "$date": "2025-07-21T00:58:27.423Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-21T01:04:22.920Z"
   }
 }]

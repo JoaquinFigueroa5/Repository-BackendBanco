@@ -81,4 +81,235 @@
   "updatedAt": {
     "$date": "2025-07-16T06:21:28.019Z"
   }
+},
+{
+  "_id": {
+    "$oid": "6879d2a1d7bcb7a193cc7de1"
+  },
+  "accountId": {
+    "$oid": "685c9c1475ac3677fa38bb0d"
+  },
+  "type": "Transferencia",
+  "amount": {
+    "$numberDecimal": "12"
+  },
+  "details": "Pago Rapido",
+  "destinationNumberAccount": "9434415969",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-18T04:50:41.823Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-18T04:50:41.823Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6879d2d6d7bcb7a193cc7e59"
+  },
+  "accountId": {
+    "$oid": "685c9c4e75ac3677fa38bb26"
+  },
+  "type": "Transferencia",
+  "amount": {
+    "$numberDecimal": "6"
+  },
+  "details": "Pago Rapido",
+  "destinationNumberAccount": "4837327101",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-18T04:51:34.455Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-18T04:51:34.455Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6879d809118cfdb01ba40233"
+  },
+  "accountId": {
+    "$oid": "685c9c4e75ac3677fa38bb26"
+  },
+  "type": "Transferencia",
+  "amount": {
+    "$numberDecimal": "500"
+  },
+  "details": "Pago Rapido",
+  "destinationNumberAccount": "2730591473",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-18T05:13:45.245Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-18T05:13:45.245Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687d7e61ff1dac67cb380c38"
+  },
+  "accountId": {
+    "$oid": "685c9c1475ac3677fa38bb0d"
+  },
+  "type": "Transferencia",
+  "amount": {
+    "$numberDecimal": "10"
+  },
+  "details": "prueba",
+  "destinationNumberAccount": "4837327101",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-20T23:40:17.689Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-20T23:40:17.689Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687d7e92ff1dac67cb380c73"
+  },
+  "accountId": {
+    "$oid": "685c9c1475ac3677fa38bb0d"
+  },
+  "type": "Transferencia",
+  "amount": {
+    "$numberDecimal": "1999"
+  },
+  "details": "prueba",
+  "destinationNumberAccount": "4837327101",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-20T23:41:06.414Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-20T23:41:06.414Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687d7e9cff1dac67cb380c95"
+  },
+  "accountId": {
+    "$oid": "685c9c1475ac3677fa38bb0d"
+  },
+  "type": "Transferencia",
+  "amount": {
+    "$numberDecimal": "1999"
+  },
+  "details": "",
+  "destinationNumberAccount": "9434415969",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-20T23:41:16.821Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-20T23:41:16.821Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687d7ebcff1dac67cb380cb8"
+  },
+  "accountId": {
+    "$oid": "685c9c1475ac3677fa38bb0d"
+  },
+  "type": "Transferencia",
+  "amount": {
+    "$numberDecimal": "1999"
+  },
+  "details": "prueba",
+  "destinationNumberAccount": "1926171298",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-20T23:41:48.028Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-20T23:41:48.028Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687d7ec6ff1dac67cb380cdc"
+  },
+  "accountId": {
+    "$oid": "685c9c1475ac3677fa38bb0d"
+  },
+  "type": "Transferencia",
+  "amount": {
+    "$numberDecimal": "1999"
+  },
+  "details": "prueba",
+  "destinationNumberAccount": "4837327101",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-20T23:41:58.901Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-20T23:41:58.901Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687d7eebff1dac67cb380d05"
+  },
+  "accountId": {
+    "$oid": "685c9c1475ac3677fa38bb0d"
+  },
+  "type": "Transferencia",
+  "amount": {
+    "$numberDecimal": "1990"
+  },
+  "details": "Prueba",
+  "destinationNumberAccount": "1926171298",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-20T23:42:35.514Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-20T23:42:35.514Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687d7f06ff1dac67cb380d33"
+  },
+  "accountId": {
+    "$oid": "685c9c1475ac3677fa38bb0d"
+  },
+  "type": "Transferencia",
+  "amount": {
+    "$numberDecimal": "4"
+  },
+  "details": "Prueba",
+  "destinationNumberAccount": "1926171298",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-20T23:43:02.483Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-20T23:43:02.483Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687d7f71ff1dac67cb380dd5"
+  },
+  "accountId": {
+    "$oid": "685c9c4e75ac3677fa38bb26"
+  },
+  "type": "Transferencia",
+  "amount": {
+    "$numberDecimal": "120"
+  },
+  "details": "Pago Rapido",
+  "destinationNumberAccount": "2730591473",
+  "status": true,
+  "createdAt": {
+    "$date": "2025-07-20T23:44:49.086Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-20T23:44:49.086Z"
+  }
 }]

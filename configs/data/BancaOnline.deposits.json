@@ -63,4 +63,92 @@
   "updatedAt": {
     "$date": "2025-07-16T04:05:46.150Z"
   }
+},
+{
+  "_id": {
+    "$oid": "6879d745118cfdb01ba4019b"
+  },
+  "numberAccount": {
+    "$oid": "685c9c4e75ac3677fa38bb26"
+  },
+  "amount": {
+    "$numberDecimal": "10000"
+  },
+  "reversed": false,
+  "status": true,
+  "depositDate": {
+    "$date": "2025-07-18T05:10:29.825Z"
+  },
+  "createdAt": {
+    "$date": "2025-07-18T05:10:29.826Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-18T05:10:29.826Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687d7ba5471575c3139e5c17"
+  },
+  "numberAccount": {
+    "$oid": "68772df7ba0f5d7e52cb54d7"
+  },
+  "amount": {
+    "$numberDecimal": "120"
+  },
+  "reversed": true,
+  "status": true,
+  "depositDate": {
+    "$date": "2025-07-20T23:28:37.537Z"
+  },
+  "createdAt": {
+    "$date": "2025-07-20T23:28:37.537Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-20T23:28:47.440Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687d7bc1471575c3139e5c29"
+  },
+  "numberAccount": {
+    "$oid": "68772df7ba0f5d7e52cb54d7"
+  },
+  "amount": {
+    "$numberDecimal": "120"
+  },
+  "reversed": true,
+  "status": true,
+  "depositDate": {
+    "$date": "2025-07-20T23:29:05.310Z"
+  },
+  "createdAt": {
+    "$date": "2025-07-20T23:29:05.312Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-20T23:29:12.959Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "687d7be0471575c3139e5c3d"
+  },
+  "numberAccount": {
+    "$oid": "68772df7ba0f5d7e52cb54d7"
+  },
+  "amount": {
+    "$numberDecimal": "120"
+  },
+  "reversed": false,
+  "status": true,
+  "depositDate": {
+    "$date": "2025-07-20T23:29:36.741Z"
+  },
+  "createdAt": {
+    "$date": "2025-07-20T23:29:36.742Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-20T23:29:36.742Z"
+  }
 }]

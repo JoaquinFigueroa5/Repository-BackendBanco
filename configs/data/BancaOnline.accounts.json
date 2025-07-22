@@ -7,14 +7,14 @@
   },
   "accountNumber": "2730591473",
   "balance": {
-    "$numberDecimal": "450.00"
+    "$numberDecimal": "91058.00"
   },
   "status": true,
   "createdAt": {
     "$date": "2025-06-26T01:02:12.973Z"
   },
   "updatedAt": {
-    "$date": "2025-07-16T06:21:27.991Z"
+    "$date": "2025-07-20T23:44:49.083Z"
   }
 },
 {
@@ -26,14 +26,14 @@
   },
   "accountNumber": "9434415969",
   "balance": {
-    "$numberDecimal": "600.00"
+    "$numberDecimal": "11985.00"
   },
   "status": true,
   "createdAt": {
     "$date": "2025-06-26T01:03:10.832Z"
   },
   "updatedAt": {
-    "$date": "2025-07-16T04:07:27.867Z"
+    "$date": "2025-07-20T23:44:49.080Z"
   }
 },
 {
@@ -45,14 +45,14 @@
   },
   "accountNumber": "1926171298",
   "balance": {
-    "$numberDecimal": "400.00"
+    "$numberDecimal": "4393.00"
   },
   "status": true,
   "createdAt": {
     "$date": "2025-07-05T04:27:38.060Z"
   },
   "updatedAt": {
-    "$date": "2025-07-16T04:06:51.500Z"
+    "$date": "2025-07-20T23:43:02.479Z"
   }
 },
 {
@@ -64,29 +64,32 @@
   },
   "accountNumber": "4837327101",
   "balance": {
-    "$numberDecimal": "100.00"
+    "$numberDecimal": "4234.00"
   },
   "status": true,
   "createdAt": {
     "$date": "2025-07-16T04:43:35.880Z"
   },
   "updatedAt": {
-    "$date": "2025-07-16T06:21:28.013Z"
+    "$date": "2025-07-20T23:41:58.897Z"
   }
 },
 {
   "_id": {
-    "$oid": "68783de87ccff7494e52f57a"
+    "$oid": "687d90b3ff1dac67cb380e26"
   },
-  "accountNumber": "0000000001",
+  "userId": {
+    "$oid": "687d90b3ff1dac67cb380e23"
+  },
+  "accountNumber": "4528179694",
   "balance": {
-    "$numberDecimal": "10000000"
+    "$numberDecimal": "0"
   },
   "status": true,
   "createdAt": {
-    "$date": "2025-07-17T00:03:52.835Z"
+    "$date": "2025-07-21T00:58:27.431Z"
   },
   "updatedAt": {
-    "$date": "2025-07-17T00:03:52.835Z"
+    "$date": "2025-07-21T00:58:27.431Z"
   }
 }]
