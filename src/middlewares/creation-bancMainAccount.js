@@ -6,6 +6,7 @@ export const createBankmain= async () => {
 
         if (!existAccount) {
             const mainAccount = new Account({
+                userId: '687f46f1f04f0c8322d8f664',
                 accountNumber: "0000000001", 
                 balance: 10000000.00,
                 status: true
